@@ -6,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers
 {
-    
-    public class ProductControllers(StoreContext context) : BaseApiController
+
+ 
+    public class ProductsController(StoreContext context) : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProduct()
+        public async Task<ActionResult<List<Product>>> GetProducts()
         {
             var products = await context.Products.ToListAsync();
             return Ok(products);
