@@ -15,13 +15,13 @@ namespace Backend.Data.Migrations
                 name: "AgeGroup",
                 columns: table => new
                 {
-                    AgeGroupId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    MinWeight = table.Column<int>(type: "int", nullable: false),
-                    MaxWeight = table.Column<int>(type: "int", nullable: false),
-                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateBy = table.Column<int>(type: "int", nullable: false)
+                    AgeGroupId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Age = table.Column<int>(type: "INTEGER", nullable: false),
+                    MinWeight = table.Column<int>(type: "INTEGER", nullable: false),
+                    MaxWeight = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreateBy = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,11 +32,11 @@ namespace Backend.Data.Migrations
                 name: "Brand",
                 columns: table => new
                 {
-                    BraId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateBy = table.Column<int>(type: "int", nullable: false)
+                    BraId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreateBy = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,11 +47,11 @@ namespace Backend.Data.Migrations
                 name: "Category",
                 columns: table => new
                 {
-                    CatId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateBy = table.Column<int>(type: "int", nullable: false)
+                    CatId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreateBy = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,9 +62,9 @@ namespace Backend.Data.Migrations
                 name: "Color",
                 columns: table => new
                 {
-                    ColorId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ColorId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,9 +75,9 @@ namespace Backend.Data.Migrations
                 name: "Images",
                 columns: table => new
                 {
-                    ProImgId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ProImgId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,9 +88,9 @@ namespace Backend.Data.Migrations
                 name: "Size",
                 columns: table => new
                 {
-                    SizeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SizeId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,14 +101,14 @@ namespace Backend.Data.Migrations
                 name: "Product",
                 columns: table => new
                 {
-                    ProId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CatId = table.Column<int>(type: "int", nullable: false),
-                    BraId = table.Column<int>(type: "int", nullable: false),
-                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ProId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Gender = table.Column<string>(type: "TEXT", nullable: false),
+                    CatId = table.Column<int>(type: "INTEGER", nullable: false),
+                    BraId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,12 +131,12 @@ namespace Backend.Data.Migrations
                 name: "ProductColor",
                 columns: table => new
                 {
-                    ProColorId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProId = table.Column<int>(type: "int", nullable: false),
-                    ColorId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    ProImgId = table.Column<int>(type: "int", nullable: false)
+                    ProColorId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ColorId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProImgId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -165,12 +165,12 @@ namespace Backend.Data.Migrations
                 name: "ProductSize",
                 columns: table => new
                 {
-                    ProSizeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProId = table.Column<int>(type: "int", nullable: false),
-                    SizeId = table.Column<int>(type: "int", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AgeGroupId = table.Column<int>(type: "int", nullable: false)
+                    ProSizeId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SizeId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Gender = table.Column<string>(type: "TEXT", nullable: false),
+                    AgeGroupId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -199,11 +199,11 @@ namespace Backend.Data.Migrations
                 name: "Price",
                 columns: table => new
                 {
-                    PriId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PriceValue = table.Column<long>(type: "bigint", nullable: false),
-                    DiscountPrice = table.Column<long>(type: "bigint", nullable: false),
-                    ProColorId = table.Column<int>(type: "int", nullable: false)
+                    PriId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PriceValue = table.Column<long>(type: "INTEGER", nullable: false),
+                    DiscountPrice = table.Column<long>(type: "INTEGER", nullable: false),
+                    ProColorId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
