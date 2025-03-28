@@ -4,6 +4,7 @@ using Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250328072152_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,15 +267,13 @@ namespace Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "683ef5e6-a3c9-4be0-bded-0b64256e9f0a",
-                            Name = "Member",
-                            NormalizedName = "MEMBER"
+                            Id = "63fff60b-fc59-4b75-b6ce-735999d23ff8",
+                            Name = "Member"
                         },
                         new
                         {
-                            Id = "7afca44c-517f-4632-b41e-cc774c90d0b4",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            Id = "4eb321e7-4a60-45c0-b3ea-4463a355b37b",
+                            Name = "Admin"
                         });
                 });
 

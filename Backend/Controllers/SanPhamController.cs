@@ -33,6 +33,8 @@ namespace Backend.Controllers
                 MoTa = dto.MoTa,
                 GiaGoc = dto.GiaGoc,
                 NgayTao = DateTime.UtcNow,
+                DanhMucId = dto.DanhMucId,
+                ThuongHieuId = dto.ThuongHieuId,
                 NgaySua = DateTime.UtcNow,
                 IsActived = dto.IsActived,
             };
