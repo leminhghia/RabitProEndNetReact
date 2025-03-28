@@ -1,4 +1,6 @@
 using Backend.Data;
+using Backend.Models;
+using Backend.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,12 +9,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddDbContext<StoreContext>(opt =>
+builder.Services.AddDbContext<AppDbContext>(opt =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());    
-builder.Services.AddCors();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<SanPhamRepository>();
+builder.Services.AddScoped<DanhMucRepository>();
+builder.Services.AddScoped<ThuongHieuRepository>();
+builder.Services.AddScoped<SanPhamBienTheRepository>();
+builder.Services.AddScoped<HinhAnhSanPham>();
+builder.Services.AddCors(); 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,8 +31,7 @@ app.UseCors(opt =>
 });
 
 app.MapControllers();
+app.UseStaticFiles();
 
-
-await DbInitializer.InitDb(app);
 
 app.Run();
