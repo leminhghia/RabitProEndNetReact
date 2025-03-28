@@ -14,6 +14,9 @@ namespace Backend.Data
         public DbSet<BienTheSanPham> BienTheSanPham { get; set; }
         public DbSet<HinhAnhSanPham> HinhAnhSanPham { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<DanhMuc_SanPham> DanhMuc_SanPham { get; set; }
+        public DbSet<ThuongHieu_SanPham> ThuongHieu_SanPham { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

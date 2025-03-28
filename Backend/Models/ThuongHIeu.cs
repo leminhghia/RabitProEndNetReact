@@ -18,6 +18,6 @@ namespace Backend.Models
 
         public byte IsActived { get; set; } = 1;
 
-        public List<SanPham>? SanPham { get; set; }
+        public List<ThuongHieu_SanPham>? thuongHieu_SanPham { get; set; }
     }
 }

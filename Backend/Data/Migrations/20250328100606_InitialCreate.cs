@@ -206,28 +206,20 @@ namespace Backend.Data.Migrations
                     TenSanPham = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MoTa = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GiaGoc = table.Column<float>(type: "real", nullable: false),
-                    DanhMucId = table.Column<int>(type: "int", nullable: false),
-                    ThuongHieuId = table.Column<int>(type: "int", nullable: false),
                     NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NgaySua = table.Column<DateTime>(type: "datetime2", nullable: true),
                     GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActived = table.Column<byte>(type: "tinyint", nullable: false)
+                    IsActived = table.Column<byte>(type: "tinyint", nullable: false),
+                    ThuongHieuId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SanPham", x => x.SanPhamId);
                     table.ForeignKey(
-                        name: "FK_SanPham_DanhMuc_DanhMucId",
-                        column: x => x.DanhMucId,
-                        principalTable: "DanhMuc",
-                        principalColumn: "DanhMucId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_SanPham_ThuongHieu_ThuongHieuId",
                         column: x => x.ThuongHieuId,
                         principalTable: "ThuongHieu",
-                        principalColumn: "ThuongHieuId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ThuongHieuId");
                 });
 
             migrationBuilder.CreateTable(
@@ -257,6 +249,60 @@ namespace Backend.Data.Migrations
                         column: x => x.SanPhamId,
                         principalTable: "SanPham",
                         principalColumn: "SanPhamId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DanhMuc_SanPham",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SanPhamId = table.Column<int>(type: "int", nullable: false),
+                    DanhMucId = table.Column<int>(type: "int", nullable: false),
+                    NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DanhMuc_SanPham", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DanhMuc_SanPham_DanhMuc_DanhMucId",
+                        column: x => x.DanhMucId,
+                        principalTable: "DanhMuc",
+                        principalColumn: "DanhMucId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DanhMuc_SanPham_SanPham_SanPhamId",
+                        column: x => x.SanPhamId,
+                        principalTable: "SanPham",
+                        principalColumn: "SanPhamId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ThuongHieu_SanPham",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SanPhamId = table.Column<int>(type: "int", nullable: false),
+                    ThuongHieuId = table.Column<int>(type: "int", nullable: false),
+                    NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ThuongHieu_SanPham", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ThuongHieu_SanPham_SanPham_SanPhamId",
+                        column: x => x.SanPhamId,
+                        principalTable: "SanPham",
+                        principalColumn: "SanPhamId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ThuongHieu_SanPham_ThuongHieu_ThuongHieuId",
+                        column: x => x.ThuongHieuId,
+                        principalTable: "ThuongHieu",
+                        principalColumn: "ThuongHieuId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -292,8 +338,8 @@ namespace Backend.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "4eb321e7-4a60-45c0-b3ea-4463a355b37b", null, "Admin", null },
-                    { "63fff60b-fc59-4b75-b6ce-735999d23ff8", null, "Member", null }
+                    { "683ef5e6-a3c9-4be0-bded-0b64256e9f0a", null, "Member", "MEMBER" },
+                    { "7afca44c-517f-4632-b41e-cc774c90d0b4", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -341,18 +387,33 @@ namespace Backend.Data.Migrations
                 column: "SanPhamId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DanhMuc_SanPham_DanhMucId",
+                table: "DanhMuc_SanPham",
+                column: "DanhMucId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DanhMuc_SanPham_SanPhamId",
+                table: "DanhMuc_SanPham",
+                column: "SanPhamId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_HinhAnhSanPham_BienTheId",
                 table: "HinhAnhSanPham",
                 column: "BienTheId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SanPham_DanhMucId",
-                table: "SanPham",
-                column: "DanhMucId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SanPham_ThuongHieuId",
                 table: "SanPham",
+                column: "ThuongHieuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ThuongHieu_SanPham_SanPhamId",
+                table: "ThuongHieu_SanPham",
+                column: "SanPhamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ThuongHieu_SanPham_ThuongHieuId",
+                table: "ThuongHieu_SanPham",
                 column: "ThuongHieuId");
         }
 
@@ -375,7 +436,13 @@ namespace Backend.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DanhMuc_SanPham");
+
+            migrationBuilder.DropTable(
                 name: "HinhAnhSanPham");
+
+            migrationBuilder.DropTable(
+                name: "ThuongHieu_SanPham");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -384,13 +451,13 @@ namespace Backend.Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "DanhMuc");
+
+            migrationBuilder.DropTable(
                 name: "BienTheSanPham");
 
             migrationBuilder.DropTable(
                 name: "SanPham");
-
-            migrationBuilder.DropTable(
-                name: "DanhMuc");
 
             migrationBuilder.DropTable(
                 name: "ThuongHieu");

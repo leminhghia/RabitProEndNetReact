@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250328072420_AddIdentityUser")]
-    partial class AddIdentityUser
+    [Migration("20250328100606_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,6 +114,32 @@ namespace Backend.Data.Migrations
                     b.ToTable("DanhMuc");
                 });
 
+            modelBuilder.Entity("Backend.Models.DanhMuc_SanPham", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DanhMucId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("NgayTao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SanPhamId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DanhMucId");
+
+                    b.HasIndex("SanPhamId");
+
+                    b.ToTable("DanhMuc_SanPham");
+                });
+
             modelBuilder.Entity("Backend.Models.HinhAnhSanPham", b =>
                 {
                     b.Property<int>("HinhAnhId")
@@ -165,9 +191,6 @@ namespace Backend.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SanPhamId"));
 
-                    b.Property<int>("DanhMucId")
-                        .HasColumnType("int");
-
                     b.Property<string>("GhiChu")
                         .HasColumnType("nvarchar(max)");
 
@@ -190,12 +213,10 @@ namespace Backend.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ThuongHieuId")
+                    b.Property<int?>("ThuongHieuId")
                         .HasColumnType("int");
 
                     b.HasKey("SanPhamId");
-
-                    b.HasIndex("DanhMucId");
 
                     b.HasIndex("ThuongHieuId");
 
@@ -236,6 +257,32 @@ namespace Backend.Data.Migrations
                     b.HasKey("ThuongHieuId");
 
                     b.ToTable("ThuongHieu");
+                });
+
+            modelBuilder.Entity("Backend.Models.ThuongHieu_SanPham", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("NgayTao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SanPhamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThuongHieuId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SanPhamId");
+
+                    b.HasIndex("ThuongHieuId");
+
+                    b.ToTable("ThuongHieu_SanPham");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -477,6 +524,25 @@ namespace Backend.Data.Migrations
                     b.Navigation("SanPham");
                 });
 
+            modelBuilder.Entity("Backend.Models.DanhMuc_SanPham", b =>
+                {
+                    b.HasOne("Backend.Models.DanhMuc", "DanhMuc")
+                        .WithMany("DanhMuc_SanPham")
+                        .HasForeignKey("DanhMucId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.SanPham", "SanPham")
+                        .WithMany("DanhMuc_SanPham")
+                        .HasForeignKey("SanPhamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DanhMuc");
+
+                    b.Navigation("SanPham");
+                });
+
             modelBuilder.Entity("Backend.Models.HinhAnhSanPham", b =>
                 {
                     b.HasOne("Backend.Models.BienTheSanPham", "BienTheSanPham")
@@ -490,19 +556,26 @@ namespace Backend.Data.Migrations
 
             modelBuilder.Entity("Backend.Models.SanPham", b =>
                 {
-                    b.HasOne("Backend.Models.DanhMuc", "DanhMuc")
+                    b.HasOne("Backend.Models.ThuongHieu", null)
                         .WithMany("SanPham")
-                        .HasForeignKey("DanhMucId")
+                        .HasForeignKey("ThuongHieuId");
+                });
+
+            modelBuilder.Entity("Backend.Models.ThuongHieu_SanPham", b =>
+                {
+                    b.HasOne("Backend.Models.SanPham", "SanPham")
+                        .WithMany("ThuongHieu_SanPham")
+                        .HasForeignKey("SanPhamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Backend.Models.ThuongHieu", "ThuongHieu")
-                        .WithMany("SanPham")
+                        .WithMany()
                         .HasForeignKey("ThuongHieuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DanhMuc");
+                    b.Navigation("SanPham");
 
                     b.Navigation("ThuongHieu");
                 });
@@ -565,12 +638,16 @@ namespace Backend.Data.Migrations
 
             modelBuilder.Entity("Backend.Models.DanhMuc", b =>
                 {
-                    b.Navigation("SanPham");
+                    b.Navigation("DanhMuc_SanPham");
                 });
 
             modelBuilder.Entity("Backend.Models.SanPham", b =>
                 {
                     b.Navigation("BienTheSanPham");
+
+                    b.Navigation("DanhMuc_SanPham");
+
+                    b.Navigation("ThuongHieu_SanPham");
                 });
 
             modelBuilder.Entity("Backend.Models.ThuongHieu", b =>

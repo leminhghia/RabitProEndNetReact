@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250328072152_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250328100823_ThuongHieu")]
+    partial class ThuongHieu
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,6 +114,32 @@ namespace Backend.Data.Migrations
                     b.ToTable("DanhMuc");
                 });
 
+            modelBuilder.Entity("Backend.Models.DanhMuc_SanPham", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DanhMucId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("NgayTao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SanPhamId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DanhMucId");
+
+                    b.HasIndex("SanPhamId");
+
+                    b.ToTable("DanhMuc_SanPham");
+                });
+
             modelBuilder.Entity("Backend.Models.HinhAnhSanPham", b =>
                 {
                     b.Property<int>("HinhAnhId")
@@ -165,9 +191,6 @@ namespace Backend.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SanPhamId"));
 
-                    b.Property<int>("DanhMucId")
-                        .HasColumnType("int");
-
                     b.Property<string>("GhiChu")
                         .HasColumnType("nvarchar(max)");
 
@@ -190,14 +213,7 @@ namespace Backend.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ThuongHieuId")
-                        .HasColumnType("int");
-
                     b.HasKey("SanPhamId");
-
-                    b.HasIndex("DanhMucId");
-
-                    b.HasIndex("ThuongHieuId");
 
                     b.ToTable("SanPham");
                 });
@@ -238,6 +254,32 @@ namespace Backend.Data.Migrations
                     b.ToTable("ThuongHieu");
                 });
 
+            modelBuilder.Entity("Backend.Models.ThuongHieu_SanPham", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("NgayTao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SanPhamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThuongHieuId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SanPhamId");
+
+                    b.HasIndex("ThuongHieuId");
+
+                    b.ToTable("ThuongHieu_SanPham");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -267,13 +309,15 @@ namespace Backend.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "63fff60b-fc59-4b75-b6ce-735999d23ff8",
-                            Name = "Member"
+                            Id = "683ef5e6-a3c9-4be0-bded-0b64256e9f0a",
+                            Name = "Member",
+                            NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "4eb321e7-4a60-45c0-b3ea-4463a355b37b",
-                            Name = "Admin"
+                            Id = "7afca44c-517f-4632-b41e-cc774c90d0b4",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         });
                 });
 
@@ -475,6 +519,25 @@ namespace Backend.Data.Migrations
                     b.Navigation("SanPham");
                 });
 
+            modelBuilder.Entity("Backend.Models.DanhMuc_SanPham", b =>
+                {
+                    b.HasOne("Backend.Models.DanhMuc", "DanhMuc")
+                        .WithMany("DanhMuc_SanPham")
+                        .HasForeignKey("DanhMucId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.SanPham", "SanPham")
+                        .WithMany("DanhMuc_SanPham")
+                        .HasForeignKey("SanPhamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DanhMuc");
+
+                    b.Navigation("SanPham");
+                });
+
             modelBuilder.Entity("Backend.Models.HinhAnhSanPham", b =>
                 {
                     b.HasOne("Backend.Models.BienTheSanPham", "BienTheSanPham")
@@ -486,21 +549,21 @@ namespace Backend.Data.Migrations
                     b.Navigation("BienTheSanPham");
                 });
 
-            modelBuilder.Entity("Backend.Models.SanPham", b =>
+            modelBuilder.Entity("Backend.Models.ThuongHieu_SanPham", b =>
                 {
-                    b.HasOne("Backend.Models.DanhMuc", "DanhMuc")
-                        .WithMany("SanPham")
-                        .HasForeignKey("DanhMucId")
+                    b.HasOne("Backend.Models.SanPham", "SanPham")
+                        .WithMany("ThuongHieu_SanPham")
+                        .HasForeignKey("SanPhamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Backend.Models.ThuongHieu", "ThuongHieu")
-                        .WithMany("SanPham")
+                        .WithMany("thuongHieu_SanPham")
                         .HasForeignKey("ThuongHieuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DanhMuc");
+                    b.Navigation("SanPham");
 
                     b.Navigation("ThuongHieu");
                 });
@@ -563,17 +626,21 @@ namespace Backend.Data.Migrations
 
             modelBuilder.Entity("Backend.Models.DanhMuc", b =>
                 {
-                    b.Navigation("SanPham");
+                    b.Navigation("DanhMuc_SanPham");
                 });
 
             modelBuilder.Entity("Backend.Models.SanPham", b =>
                 {
                     b.Navigation("BienTheSanPham");
+
+                    b.Navigation("DanhMuc_SanPham");
+
+                    b.Navigation("ThuongHieu_SanPham");
                 });
 
             modelBuilder.Entity("Backend.Models.ThuongHieu", b =>
                 {
-                    b.Navigation("SanPham");
+                    b.Navigation("thuongHieu_SanPham");
                 });
 #pragma warning restore 612, 618
         }
