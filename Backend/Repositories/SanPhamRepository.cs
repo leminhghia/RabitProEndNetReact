@@ -1,6 +1,7 @@
 ﻿using Backend.Data;
 using Backend.DTOs;
 using Backend.Models;
+using Backend.RequestHelpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Repositories
@@ -16,11 +17,11 @@ namespace Backend.Repositories
 
 
 
-        public async Task<IEnumerable<SanPhamDto>> GetAllSanPhamAsync()
+        public async Task<PagedList<SanPhamDto>> GetAllSanPhamAsync(IQueryable<SanPham> query,int pageNumber,int pageSize)
         {
 
 
-            return await _context.SanPham               
+            var sanPham = query
                   .Include(x => x.DanhMuc_SanPham!)
             .ThenInclude(x => x.DanhMuc)
                 .Include(x => x.ThuongHieu_SanPham!)
@@ -60,8 +61,11 @@ namespace Backend.Repositories
                     NgaySua = x.NgaySua,
                     IsActived = x.IsActived,
                 })
-                .ToListAsync();
+                .AsQueryable();
+            return await PagedList<SanPhamDto>.ToPagedList(sanPham, pageNumber, pageSize);
         }
+
+
 
         public async Task<SanPhamDto?> GetById(int id)
         {
