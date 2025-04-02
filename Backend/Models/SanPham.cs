@@ -11,14 +11,15 @@ namespace Backend.Models
         public string TenSanPham { get; set; } = string.Empty;
         public string? MoTa { get; set; }
         public float GiaGoc { get; set; }
-        public int DanhMucId { get; set; }
-        public DanhMuc? DanhMuc { get; set; }
-        public int ThuongHieuId { get; set; }
-        public ThuongHieu? ThuongHieu { get; set; }
+
         public DateTime NgayTao { get; set; } = DateTime.UtcNow;
         public DateTime? NgaySua { get; set; }
         public string? GhiChu { get; set; }
         public byte IsActived { get; set; } = 1;
-        public  List<BienTheSanPham>? BienTheSanPham { get; set; } 
+        public List<DanhMuc_SanPham>? DanhMuc_SanPham { get; set; }
+        public List<ThuongHieu_SanPham>? ThuongHieu_SanPham { get; set; }
+        public  List<BienTheSanPham>? BienTheSanPham { get; set; }
+        
+
     }
 }
