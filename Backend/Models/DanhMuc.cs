@@ -17,6 +17,7 @@ namespace Backend.Models
         public string? GhiChu { get; set; }
         public byte IsActived { get; set; } = 1;
 
-        public List<SanPham>? SanPham { get; set; }
+        public List<DanhMuc_SanPham>? DanhMuc_SanPham { get; set; }
+
     }
 }

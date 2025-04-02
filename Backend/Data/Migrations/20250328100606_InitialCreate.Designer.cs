@@ -4,6 +4,7 @@ using Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250328100606_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -210,7 +213,12 @@ namespace Backend.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ThuongHieuId")
+                        .HasColumnType("int");
+
                     b.HasKey("SanPhamId");
+
+                    b.HasIndex("ThuongHieuId");
 
                     b.ToTable("SanPham");
                 });
@@ -546,6 +554,13 @@ namespace Backend.Data.Migrations
                     b.Navigation("BienTheSanPham");
                 });
 
+            modelBuilder.Entity("Backend.Models.SanPham", b =>
+                {
+                    b.HasOne("Backend.Models.ThuongHieu", null)
+                        .WithMany("SanPham")
+                        .HasForeignKey("ThuongHieuId");
+                });
+
             modelBuilder.Entity("Backend.Models.ThuongHieu_SanPham", b =>
                 {
                     b.HasOne("Backend.Models.SanPham", "SanPham")
@@ -555,7 +570,7 @@ namespace Backend.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Backend.Models.ThuongHieu", "ThuongHieu")
-                        .WithMany("thuongHieu_SanPham")
+                        .WithMany()
                         .HasForeignKey("ThuongHieuId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -637,7 +652,7 @@ namespace Backend.Data.Migrations
 
             modelBuilder.Entity("Backend.Models.ThuongHieu", b =>
                 {
-                    b.Navigation("thuongHieu_SanPham");
+                    b.Navigation("SanPham");
                 });
 #pragma warning restore 612, 618
         }
