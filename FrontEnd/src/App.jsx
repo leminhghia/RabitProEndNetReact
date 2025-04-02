@@ -1,14 +1,16 @@
 import { NavLink, Outlet } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
+import Header from './Component/header'
 
 function App() {
+	
   return (
     <>
       <div>
-        <h1>Chào mừng đến với RABITPROENDNETREACT</h1>
+        <Header />
         <Box sx={{ paddingTop: '64px' }}>
-          <nav style={navStyle}>
+          {/* <nav style={navStyle}>
             <NavLink
               to="/"
               style={linkStyle}
@@ -23,7 +25,7 @@ function App() {
             >
               Về chúng tôi
             </NavLink>
-          </nav>
+          </nav> */}
           <Outlet />
         </Box>
       </div>
@@ -33,17 +35,17 @@ function App() {
 
 export default App
 
-const navStyle = {
-  display: 'flex',
-  gap: '20px',
-  padding: '10px 20px',
-  backgroundColor: '#f5f5f5',
-  borderBottom: '1px solid #ddd',
-}
+// const navStyle = {
+//   display: 'flex',
+//   gap: '20px',
+//   padding: '10px 20px',
+//   backgroundColor: '#f5f5f5',
+//   borderBottom: '1px solid #ddd',
+// }
 
-const linkStyle = {
-  textDecoration: 'none',
-  color: '#333',
-  fontWeight: '500',
-  padding: '5px 10px',
-}
+// const linkStyle = {
+//   textDecoration: 'none',
+//   color: '#333',
+//   fontWeight: '500',
+//   padding: '5px 10px',
+// }

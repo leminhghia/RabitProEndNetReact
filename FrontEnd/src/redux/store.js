@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import CounterReducer from './slices/counter/counterSlide'
+import themeReducer from './slices/themeSlice/drakMode'
+
 export const store = configureStore({
   reducer: {
-    count: CounterReducer,
+    theme: themeReducer,
   },
 })
