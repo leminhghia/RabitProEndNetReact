@@ -4,6 +4,9 @@ import HomePages from '../pages/Home/homePages'
 import AboutBlog from '../pages/About/aboutBlog'
 import Login from '../pages/user/login'
 import Register from '../pages/user/register'
+import QuenMatKhau from '../pages/user/QuenMatKhau'
+import Product from '../pages/product/ProductMain'
+
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -24,6 +27,14 @@ export const router = createBrowserRouter([
       {
         path: 'register',
         element: <Register />,
+      },
+      {
+        path: 'quenMatKhau',
+        element: <QuenMatKhau />,
+      },
+      {
+        path: 'product',
+        element: <Product />,
       },
     ],
   },

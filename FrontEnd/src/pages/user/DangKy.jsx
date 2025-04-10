@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Container,
   Box,
@@ -10,51 +10,46 @@ import {
 import { NavLink, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
+  useEffect(() => {
+    if (email && password) {
+      console.log('Email:', email)
+      console.log('Password:', password)
+    }
+  }, [email, password])
 
+  const handleRegister = async (event) => {
+    event.preventDefault()
     if (!email || !password) {
-      alert('Vui lòng nhập email và mật khẩu')
+      setError('Vui lòng nhập đầy đủ thông tin')
       return
     }
 
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    // if (!emailRegex.test(email)) {
+    //   setError('Email không hợp lệ!')
+    //   return
+    // }
     setLoading(true)
+    setError('')
     try {
       const response = await axios.post(
-        'https://localhost:5001/api/login',
+        'https://localhost:5001/api/taikhoan/register',
         { email, password },
         { headers: { 'Content-Type': 'application/json' } }
       )
-
       if (response.status === 200) {
-        alert('Đăng nhập thành công!')
-        navigate('/')
+        alert('Đăng ký thành công!')
+        navigate('/login')
       }
     } catch (error) {
-      console.error('Lỗi đăng nhập:', error)
-      if (error.response) {
-        if (error.response.status === 401) {
-          alert('Sai email hoặc mật khẩu!')
-        } else if (error.response.status === 400) {
-          alert(
-            'Dữ liệu không hợp lệ! Vui lòng kiểm tra lại email và mật khẩu.'
-          )
-        } else {
-          alert('Đã xảy ra lỗi từ server! Vui lòng thử lại sau.')
-        }
-      } else if (error.request) {
-        alert(
-          'Không thể kết nối đến server! Vui lòng kiểm tra kết nối mạng hoặc server.'
-        )
-      } else {
-        alert('Đã xảy ra lỗi không xác định! Vui lòng thử lại.')
-      }
+      console.error('Lỗi đăng ký:', error)
     } finally {
       setLoading(false)
     }
@@ -75,9 +70,9 @@ const Login = () => {
           sx={{ padding: 4, width: '100%', textAlign: 'center' }}
         >
           <Typography component="h1" variant="h5">
-            Đăng nhập
+            Đăng ký
           </Typography>
-          <Box component="form" sx={{ mt: 1 }} onSubmit={handleLogin}>
+          <Box component="form" sx={{ mt: 1 }} onSubmit={handleRegister}>
             <TextField
               margin="normal"
               required
@@ -93,10 +88,15 @@ const Login = () => {
               fullWidth
               label="Mật khẩu"
               type="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {error && (
+              <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                {error}
+              </Typography>
+            )}
             <Button
               type="submit"
               fullWidth
@@ -104,8 +104,11 @@ const Login = () => {
               sx={{ mt: 3, mb: 2 }}
               disabled={loading}
             >
-              {loading ? 'Đang xử lý...' : 'Đăng nhập'}
+              {loading ? 'Đang xử lý...' : 'Đăng ký'}
             </Button>
+            <Box sx={{ textAlign: 'center' }}>
+              <NavLink to="/login">{'Đã có tài khoản? Đăng nhập'}</NavLink>
+            </Box>
           </Box>
         </Paper>
       </Box>
@@ -113,4 +116,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register

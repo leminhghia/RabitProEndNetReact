@@ -19,6 +19,12 @@ const Header = () => {
         <Button color="inherit" component={Link} to="/login">
           login
         </Button>
+        <Button color="inherit" component={Link} to="/register">
+          Register
+        </Button>
+        {/* <Button color="inherit" component={Link} to="/headerText">
+          Header test
+        </Button> */}
         <ThemeToggle />
         <Typography
           variant="h6"
