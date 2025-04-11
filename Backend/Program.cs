@@ -1,6 +1,7 @@
 using Backend.Data;
 using Backend.Models;
 using Backend.Repositories;
+using Backend.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,12 +16,10 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<SanPhamRepository>();
-builder.Services.AddScoped<DanhMucRepository>();
-builder.Services.AddScoped<ThuongHieuRepository>();
-builder.Services.AddScoped<SanPhamBienTheRepository>();
-builder.Services.AddScoped<HinhAnhSanPham>();
+builder.Services.AddScoped<IProductRepository, ProducRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
 {
     opt.User.RequireUniqueEmail = true;
@@ -28,6 +27,7 @@ builder.Services.AddIdentityApiEndpoints<User>(opt =>
 })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
+
 builder.Services.AddCors(); 
 var app = builder.Build();
 
