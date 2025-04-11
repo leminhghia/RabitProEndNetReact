@@ -17,10 +17,10 @@ namespace Backend.Data.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,22 +31,22 @@ namespace Backend.Data.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false),
+                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "TEXT", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,15 +57,15 @@ namespace Backend.Data.Migrations
                 name: "DanhMuc",
                 columns: table => new
                 {
-                    DanhMucId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TenDanhMuc = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NguoiTao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NgaySua = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    NguoiSua = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActived = table.Column<byte>(type: "tinyint", nullable: false)
+                    DanhMucId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TenDanhMuc = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    NgayTao = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    NguoiTao = table.Column<string>(type: "TEXT", nullable: true),
+                    NgaySua = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    NguoiSua = table.Column<string>(type: "TEXT", nullable: true),
+                    GhiChu = table.Column<string>(type: "TEXT", nullable: true),
+                    IsActived = table.Column<byte>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,18 +73,37 @@ namespace Backend.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SanPham",
+                columns: table => new
+                {
+                    SanPhamId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TenSanPham = table.Column<string>(type: "TEXT", nullable: false),
+                    MoTa = table.Column<string>(type: "TEXT", nullable: true),
+                    GiaGoc = table.Column<float>(type: "REAL", nullable: false),
+                    NgayTao = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    NgaySua = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    GhiChu = table.Column<string>(type: "TEXT", nullable: true),
+                    IsActived = table.Column<byte>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SanPham", x => x.SanPhamId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ThuongHieu",
                 columns: table => new
                 {
-                    ThuongHieuId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TenThuongHieu = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NguoiTao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NgaySua = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    NguoiSua = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActived = table.Column<byte>(type: "tinyint", nullable: false)
+                    ThuongHieuId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TenThuongHieu = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    NgayTao = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    NguoiTao = table.Column<string>(type: "TEXT", nullable: true),
+                    NgaySua = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    NguoiSua = table.Column<string>(type: "TEXT", nullable: true),
+                    GhiChu = table.Column<string>(type: "TEXT", nullable: true),
+                    IsActived = table.Column<byte>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,11 +114,11 @@ namespace Backend.Data.Migrations
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    RoleId = table.Column<string>(type: "TEXT", nullable: false),
+                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
+                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -116,11 +135,11 @@ namespace Backend.Data.Migrations
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
+                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -137,10 +156,10 @@ namespace Backend.Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
+                    ProviderKey = table.Column<string>(type: "TEXT", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "TEXT", nullable: true),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,8 +176,8 @@ namespace Backend.Data.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    RoleId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,10 +200,10 @@ namespace Backend.Data.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Value = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -198,48 +217,23 @@ namespace Backend.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SanPham",
-                columns: table => new
-                {
-                    SanPhamId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TenSanPham = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MoTa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GiaGoc = table.Column<float>(type: "real", nullable: false),
-                    NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NgaySua = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActived = table.Column<byte>(type: "tinyint", nullable: false),
-                    ThuongHieuId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SanPham", x => x.SanPhamId);
-                    table.ForeignKey(
-                        name: "FK_SanPham_ThuongHieu_ThuongHieuId",
-                        column: x => x.ThuongHieuId,
-                        principalTable: "ThuongHieu",
-                        principalColumn: "ThuongHieuId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BienTheSanPham",
                 columns: table => new
                 {
-                    BienTheId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SanPhamId = table.Column<int>(type: "int", nullable: false),
-                    Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MauSac = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GiaBan = table.Column<float>(type: "real", nullable: false),
-                    SoLuong = table.Column<int>(type: "int", nullable: false),
-                    NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NguoiTao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NgaySua = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    NguoiSua = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActived = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    BienTheId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SanPhamId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Size = table.Column<string>(type: "TEXT", nullable: false),
+                    MauSac = table.Column<string>(type: "TEXT", nullable: false),
+                    GiaBan = table.Column<float>(type: "REAL", nullable: false),
+                    SoLuong = table.Column<int>(type: "INTEGER", nullable: false),
+                    NgayTao = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    NguoiTao = table.Column<string>(type: "TEXT", nullable: true),
+                    NgaySua = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    NguoiSua = table.Column<string>(type: "TEXT", nullable: true),
+                    IsActived = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    GhiChu = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -256,11 +250,11 @@ namespace Backend.Data.Migrations
                 name: "DanhMuc_SanPham",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SanPhamId = table.Column<int>(type: "int", nullable: false),
-                    DanhMucId = table.Column<int>(type: "int", nullable: false),
-                    NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SanPhamId = table.Column<int>(type: "INTEGER", nullable: false),
+                    DanhMucId = table.Column<int>(type: "INTEGER", nullable: false),
+                    NgayTao = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -283,11 +277,11 @@ namespace Backend.Data.Migrations
                 name: "ThuongHieu_SanPham",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SanPhamId = table.Column<int>(type: "int", nullable: false),
-                    ThuongHieuId = table.Column<int>(type: "int", nullable: false),
-                    NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SanPhamId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ThuongHieuId = table.Column<int>(type: "INTEGER", nullable: false),
+                    NgayTao = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -310,17 +304,17 @@ namespace Backend.Data.Migrations
                 name: "HinhAnhSanPham",
                 columns: table => new
                 {
-                    HinhAnhId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BienTheId = table.Column<int>(type: "int", nullable: false),
-                    URLHinhAnh = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NgayTao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NguoiTao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NgaySua = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    NguoiSua = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActived = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    HinhAnhId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    BienTheId = table.Column<int>(type: "INTEGER", nullable: false),
+                    URLHinhAnh = table.Column<string>(type: "TEXT", nullable: false),
+                    NgayTao = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    NguoiTao = table.Column<string>(type: "TEXT", nullable: true),
+                    NgaySua = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    NguoiSua = table.Column<string>(type: "TEXT", nullable: true),
+                    IsActived = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    GhiChu = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -351,8 +345,7 @@ namespace Backend.Data.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -378,8 +371,7 @@ namespace Backend.Data.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_BienTheSanPham_SanPhamId",
@@ -400,11 +392,6 @@ namespace Backend.Data.Migrations
                 name: "IX_HinhAnhSanPham_BienTheId",
                 table: "HinhAnhSanPham",
                 column: "BienTheId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SanPham_ThuongHieuId",
-                table: "SanPham",
-                column: "ThuongHieuId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ThuongHieu_SanPham_SanPhamId",
@@ -457,10 +444,10 @@ namespace Backend.Data.Migrations
                 name: "BienTheSanPham");
 
             migrationBuilder.DropTable(
-                name: "SanPham");
+                name: "ThuongHieu");
 
             migrationBuilder.DropTable(
-                name: "ThuongHieu");
+                name: "SanPham");
         }
     }
 }

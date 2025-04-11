@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+	opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
@@ -23,18 +23,21 @@ builder.Services.AddScoped<SanPhamBienTheRepository>();
 builder.Services.AddScoped<HinhAnhSanPham>();
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
 {
-    opt.User.RequireUniqueEmail = true;
+	opt.User.RequireUniqueEmail = true;
 
 })
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>();
-builder.Services.AddCors(); 
+		.AddRoles<IdentityRole>()
+		.AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseCors(opt =>
 {
-    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("https://localhost:3001");
+	opt.WithOrigins("https://localhost:3000")  // Cung cấp địa chỉ của frontend
+		 .AllowAnyHeader()
+		 .AllowAnyMethod()
+		 .AllowCredentials();  // Cho phép gửi cookies và credentials
 });
 
 app.UseAuthentication();
