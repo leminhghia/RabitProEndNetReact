@@ -4,6 +4,7 @@ using Backend.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250408045016_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,31 +154,6 @@ namespace Backend.Data.Migrations
                     b.ToTable("Categories", (string)null);
                 });
 
-            modelBuilder.Entity("Backend.Models.FlashSale", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("maxQuantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("FlashSale");
-                });
-
             modelBuilder.Entity("Backend.Models.Gallery", b =>
                 {
                     b.Property<Guid>("Id")
@@ -226,13 +204,6 @@ namespace Backend.Data.Migrations
 
                     b.Property<float?>("DiscountPrice")
                         .HasColumnType("real");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsFlashSale")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ProductDescription")
                         .HasColumnType("nvarchar(max)");
@@ -715,13 +686,6 @@ namespace Backend.Data.Migrations
                     b.Navigation("Attribute");
                 });
 
-            modelBuilder.Entity("Backend.Models.FlashSale", b =>
-                {
-                    b.HasOne("Backend.Models.Product", null)
-                        .WithMany("FlashSale")
-                        .HasForeignKey("ProductId");
-                });
-
             modelBuilder.Entity("Backend.Models.Gallery", b =>
                 {
                     b.HasOne("Backend.Models.AttributeValues", "AttributeValues")
@@ -942,8 +906,6 @@ namespace Backend.Data.Migrations
 
             modelBuilder.Entity("Backend.Models.Product", b =>
                 {
-                    b.Navigation("FlashSale");
-
                     b.Navigation("Galleries");
 
                     b.Navigation("ProductAttributes");
