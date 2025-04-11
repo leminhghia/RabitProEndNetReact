@@ -22,10 +22,14 @@ namespace Backend.Repositories
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-          var category = await _context.Category.FindAsync(id); 
-            if (category != null) return false;
+            var category = await _context.Category.FindAsync(id);
+            if (category == null) return false;
+
+            _context.Category.Remove(category);
+            await _context.SaveChangesAsync();
             return true;
         }
+
 
         public async Task<IEnumerable<CategoryDto>> GetAllCategory()
         {

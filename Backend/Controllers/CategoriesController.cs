@@ -35,5 +35,16 @@ namespace Backend.Controllers
             return Ok(result);
            
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var result = await _service.DeleteCategoryAsync(id);
+
+            if (!result)
+                return NotFound($"Category with id {id} not found.");
+
+            return NoContent(); 
+        }
+
     }
 }

@@ -39,8 +39,13 @@ namespace Backend.Services
 
         public async Task<bool> DeleteCategoryAsync(Guid id)
         {
-           return await _repository.DeleteAsync(id);
+            var category = await _repository.GetByIdAsync(id);
+            if (category == null) return false;
+
+            return await _repository.DeleteAsync(id);
         }
+
+
 
         public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
         {
