@@ -111,11 +111,9 @@ namespace Backend.Data.Migrations
 
             modelBuilder.Entity("Backend.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -134,11 +132,8 @@ namespace Backend.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Parent_id")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("Parent_id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -160,14 +155,14 @@ namespace Backend.Data.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("MaxQuantity")
+                        .HasColumnType("int");
+
                     b.Property<Guid?>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("maxQuantity")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -298,8 +293,8 @@ namespace Backend.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Category_id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Category_id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("Product_id")
                         .HasColumnType("uniqueidentifier");

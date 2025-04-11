@@ -91,12 +91,10 @@ namespace Backend.Data.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Parent_id = table.Column<int>(type: "int", nullable: true),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Parent_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CategoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     CategoryDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -276,9 +274,11 @@ namespace Backend.Data.Migrations
                     RegularPrice = table.Column<float>(type: "real", nullable: true),
                     DiscountPrice = table.Column<float>(type: "real", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShortDescription = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     ProductDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProductWeight = table.Column<float>(type: "real", nullable: true),
+                    IsFlashSale = table.Column<bool>(type: "bit", nullable: false),
                     Published = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -311,6 +311,26 @@ namespace Backend.Data.Migrations
                         principalTable: "Attribute_values",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FlashSale",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MaxQuantity = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FlashSale", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FlashSale_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -372,7 +392,7 @@ namespace Backend.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Product_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Category_id = table.Column<int>(type: "int", nullable: false)
+                    Category_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -542,6 +562,11 @@ namespace Backend.Data.Migrations
                 column: "Attribute_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FlashSale_ProductId",
+                table: "FlashSale",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Galleries_AttributeValue_id",
                 table: "Galleries",
                 column: "AttributeValue_id");
@@ -635,6 +660,9 @@ namespace Backend.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "FlashSale");
 
             migrationBuilder.DropTable(
                 name: "Galleries");

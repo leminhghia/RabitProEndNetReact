@@ -7,7 +7,7 @@ namespace Backend.Services
     {
         Task<Category?> GetCategoryByIdAsync(Guid id);
         Task<CategoryDto> CreateCategoryAsync(CategoryDto category);
-        Task<Category> UpdateCategoryAsync(Category category);
+        Task<CategoryDto?> UpdateCategoryAsync(CategoryDto dto);
         Task<bool> DeleteCategoryAsync(Guid id);
         Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync();
     }

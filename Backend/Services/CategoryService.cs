@@ -20,21 +20,18 @@ namespace Backend.Services
                 CategoryName = dto.CategoryName,
                 CategoryDescription = dto.CategoryDescription,
                 Parent_id = dto.ParentId,
-                ImagePath = dto.ImagePath,
-                Active = dto.IsActived,
+               Active = dto.IsActived,
                 CreatedAt = DateTime.UtcNow
             };  
 
             var result = await _repository.AddAsync(category);
 
-            // Mapping ngược lại: Entity → Dto để return
             return new CategoryDto
             {
                 Id = result.Id,
                 CategoryName = result.CategoryName,
                 CategoryDescription = result.CategoryDescription,
                 ParentId = result.Parent_id,
-                ImagePath = result.ImagePath,
                 IsActived = result.Active
             };
         }
@@ -55,9 +52,27 @@ namespace Backend.Services
             return await GetCategoryByIdAsync(id);
         }
 
-        public Task<Category> UpdateCategoryAsync(Category category)
+        public async Task<CategoryDto?> UpdateCategoryAsync(CategoryDto dto)
         {
-           return _repository.UpdateAsync(category);
+            var existing = await _repository.GetByIdAsync(dto.Id);
+            if (existing == null) return null;
+
+            existing.CategoryName = dto.CategoryName;
+            existing.CategoryDescription = dto.CategoryDescription;
+            existing.Parent_id = dto.ParentId;
+            existing.Active = dto.IsActived;
+
+            var updated = await _repository.UpdateAsync(existing);
+
+            return new CategoryDto
+            {
+                Id = updated.Id,
+                CategoryName = updated.CategoryName,
+                CategoryDescription = updated.CategoryDescription,
+                ParentId = updated.Parent_id,
+                IsActived = updated.Active
+            };
+
         }
     }
 }

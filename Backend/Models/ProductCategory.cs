@@ -8,7 +8,7 @@ namespace Backend.Models
         [ForeignKey(nameof(Product))]
         public Guid Product_id { get; set; }
         [ForeignKey(nameof(Category))]
-        public int Category_id { get; set; }
+        public Guid Category_id { get; set; }
 
         public Product? Product { get; set; }
         public Category? Category { get; set; }

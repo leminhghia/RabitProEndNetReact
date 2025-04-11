@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250410074837_addGender")]
-    partial class addGender
+    [Migration("20250411031706_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,11 +114,9 @@ namespace Backend.Data.Migrations
 
             modelBuilder.Entity("Backend.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
@@ -137,11 +135,8 @@ namespace Backend.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Parent_id")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("Parent_id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -152,6 +147,31 @@ namespace Backend.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.FlashSale", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MaxQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("FlashSale");
                 });
 
             modelBuilder.Entity("Backend.Models.Gallery", b =>
@@ -208,6 +228,9 @@ namespace Backend.Data.Migrations
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFlashSale")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ProductDescription")
                         .HasColumnType("nvarchar(max)");
@@ -273,8 +296,8 @@ namespace Backend.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Category_id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Category_id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("Product_id")
                         .HasColumnType("uniqueidentifier");
@@ -690,6 +713,13 @@ namespace Backend.Data.Migrations
                     b.Navigation("Attribute");
                 });
 
+            modelBuilder.Entity("Backend.Models.FlashSale", b =>
+                {
+                    b.HasOne("Backend.Models.Product", null)
+                        .WithMany("FlashSale")
+                        .HasForeignKey("ProductId");
+                });
+
             modelBuilder.Entity("Backend.Models.Gallery", b =>
                 {
                     b.HasOne("Backend.Models.AttributeValues", "AttributeValues")
@@ -910,6 +940,8 @@ namespace Backend.Data.Migrations
 
             modelBuilder.Entity("Backend.Models.Product", b =>
                 {
+                    b.Navigation("FlashSale");
+
                     b.Navigation("Galleries");
 
                     b.Navigation("ProductAttributes");

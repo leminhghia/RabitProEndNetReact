@@ -26,5 +26,14 @@ namespace Backend.Controllers
 
             return Ok(created);
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCategory(Guid id, [FromBody] CategoryDto dto)
+        {
+            if (id != dto.Id) return BadRequest("Id Not Found");
+            var result = await _service.UpdateCategoryAsync(dto);
+
+            return Ok(result);
+           
+        }
     }
 }
