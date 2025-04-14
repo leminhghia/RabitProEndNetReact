@@ -59,7 +59,7 @@ export const registerUser = createAsyncThunk(
   'register/registerUser',
   async ({ email, password }, thunkAPI) => {
     try {
-      const response = await fetch(`${API_URL}/taikhoan/register`, {
+      const response = await fetch(`${API_URL}/account/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

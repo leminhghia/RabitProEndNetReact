@@ -5,8 +5,10 @@ import AboutBlog from '../pages/About/aboutBlog'
 import Login from '../pages/user/login'
 import Register from '../pages/user/register'
 import QuenMatKhau from '../pages/user/QuenMatKhau'
-import Product from '../pages/product/ProductMain'
-
+import ProductMain from '../pages/product/ProductMaster'
+import Admin from '../pages/adminPage/admin'
+import DashBoard from '../Component/adminComponent/DashBoard'
+import 'bootstrap/dist/css/bootstrap.min.css'
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -34,7 +36,19 @@ export const router = createBrowserRouter([
       },
       {
         path: 'product',
-        element: <Product />,
+        element: <ProductMain />,
+      },
+    ],
+  },
+  {
+    path: 'admin',
+    exact: 'true',
+    element: <Admin />,
+    children: [
+      {
+        path: 'dashboard',
+
+        element: <DashBoard />,
       },
     ],
   },

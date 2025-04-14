@@ -7,7 +7,7 @@ import './styles/global.css'
 function App() {
   return (
     <>
-      <div className='container-app'>
+      <div className="container-app">
         <div className="Header">
           <HeaderText />
         </div>

@@ -17,245 +17,451 @@ namespace Backend.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.3");
 
-            modelBuilder.Entity("Backend.Models.BienTheSanPham", b =>
+            modelBuilder.Entity("Backend.Models.Attribute", b =>
                 {
-                    b.Property<int>("BienTheId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("GhiChu")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("GiaBan")
-                        .HasColumnType("REAL");
-
-                    b.Property<bool>("IsActived")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("MauSac")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("NgaySua")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("NgayTao")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NguoiSua")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NguoiTao")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("SanPhamId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("SoLuong")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("BienTheId");
-
-                    b.HasIndex("SanPhamId");
-
-                    b.ToTable("BienTheSanPham");
-                });
-
-            modelBuilder.Entity("Backend.Models.DanhMuc", b =>
-                {
-                    b.Property<int>("DanhMucId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("GhiChu")
-                        .HasColumnType("TEXT");
-
-                    b.Property<byte>("IsActived")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime?>("NgaySua")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("NgayTao")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NguoiSua")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NguoiTao")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TenDanhMuc")
+                    b.Property<string>("AttributeName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("DanhMucId");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("DanhMuc");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Attributes", (string)null);
                 });
 
-            modelBuilder.Entity("Backend.Models.DanhMuc_SanPham", b =>
+            modelBuilder.Entity("Backend.Models.AttributeValues", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AttributeValue")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("Attribute_id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Color")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Attribute_id");
+
+                    b.ToTable("Attribute_values", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.Brand", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("BrandName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LogoPath")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Brand", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryDescription")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("Parent_id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.FlashSale", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MaxQuantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("FlashSale");
+                });
+
+            modelBuilder.Entity("Backend.Models.Gallery", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AttributeValue_id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Caption")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("Product_id")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttributeValue_id");
+
+                    b.HasIndex("Product_id");
+
+                    b.ToTable("Galleries", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("BrandId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float?>("DiscountPrice")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsFlashSale")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ProductDescription")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<float?>("ProductWeight")
+                        .HasColumnType("REAL");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float?>("RegularPrice")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("ShortDescription")
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.ToTable("Products", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.ProductAttribute", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("Attribute_id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("Product_id")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Attribute_id");
+
+                    b.HasIndex("Product_id");
+
+                    b.ToTable("Product_attribute", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.ProductCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("Category_id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("Product_id")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Category_id");
+
+                    b.HasIndex("Product_id");
+
+                    b.ToTable("Product_categories", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.ProductShipping", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Free")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("Product_id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float?>("ShipCharge")
+                        .HasColumnType("REAL");
+
+                    b.Property<Guid>("Shipping_id")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Product_id");
+
+                    b.HasIndex("Shipping_id");
+
+                    b.ToTable("Product_shipping", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.ProductTag", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("Product_id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Tag_id")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Product_id");
+
+                    b.HasIndex("Tag_id");
+
+                    b.ToTable("Product_tags", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.Shipping", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("Cost")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("EstimatedDeliveryDays")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ShippingName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shippings", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.Tag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DanhMucId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("NgayTao")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SanPhamId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DanhMucId");
-
-                    b.HasIndex("SanPhamId");
-
-                    b.ToTable("DanhMuc_SanPham");
-                });
-
-            modelBuilder.Entity("Backend.Models.HinhAnhSanPham", b =>
-                {
-                    b.Property<int>("HinhAnhId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BienTheId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("GhiChu")
+                    b.Property<Guid>("CreatedBy")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsActived")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime?>("NgaySua")
+                    b.Property<string>("Icon")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("NgayTao")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NguoiSua")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NguoiTao")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("URLHinhAnh")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("HinhAnhId");
-
-                    b.HasIndex("BienTheId");
-
-                    b.ToTable("HinhAnhSanPham");
-                });
-
-            modelBuilder.Entity("Backend.Models.SanPham", b =>
-                {
-                    b.Property<int>("SanPhamId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("GhiChu")
-                        .HasColumnType("TEXT");
-
-                    b.Property<float>("GiaGoc")
-                        .HasColumnType("REAL");
-
-                    b.Property<byte>("IsActived")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("MoTa")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("NgaySua")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("NgayTao")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TenSanPham")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("SanPhamId");
-
-                    b.ToTable("SanPham");
-                });
-
-            modelBuilder.Entity("Backend.Models.ThuongHieu", b =>
-                {
-                    b.Property<int>("ThuongHieuId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("GhiChu")
-                        .HasColumnType("TEXT");
-
-                    b.Property<byte>("IsActived")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime?>("NgaySua")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("NgayTao")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NguoiSua")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NguoiTao")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TenThuongHieu")
+                    b.Property<string>("TagName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ThuongHieuId");
-
-                    b.ToTable("ThuongHieu");
-                });
-
-            modelBuilder.Entity("Backend.Models.ThuongHieu_SanPham", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("NgayTao")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("SanPhamId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ThuongHieuId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SanPhamId");
+                    b.ToTable("Tags", (string)null);
+                });
 
-                    b.HasIndex("ThuongHieuId");
+            modelBuilder.Entity("Backend.Models.Variant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("ThuongHieu_SanPham");
+                    b.Property<Guid>("Product_id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("VariantAttributeValue_id")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Product_id");
+
+                    b.HasIndex("VariantAttributeValue_id");
+
+                    b.ToTable("Variants", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.VariantAttributeValue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AttributeValue_id")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttributeValue_id");
+
+                    b.ToTable("Variant_attribute_value", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Models.VariantValue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("Variant_id")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Variant_id")
+                        .IsUnique();
+
+                    b.ToTable("Variant_value", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -480,64 +686,167 @@ namespace Backend.Data.Migrations
                     b.HasDiscriminator().HasValue("User");
                 });
 
-            modelBuilder.Entity("Backend.Models.BienTheSanPham", b =>
+            modelBuilder.Entity("Backend.Models.AttributeValues", b =>
                 {
-                    b.HasOne("Backend.Models.SanPham", "SanPham")
-                        .WithMany("BienTheSanPham")
-                        .HasForeignKey("SanPhamId")
+                    b.HasOne("Backend.Models.Attribute", "Attribute")
+                        .WithMany("AttributeValues")
+                        .HasForeignKey("Attribute_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SanPham");
+                    b.Navigation("Attribute");
                 });
 
-            modelBuilder.Entity("Backend.Models.DanhMuc_SanPham", b =>
+            modelBuilder.Entity("Backend.Models.FlashSale", b =>
                 {
-                    b.HasOne("Backend.Models.DanhMuc", "DanhMuc")
-                        .WithMany("DanhMuc_SanPham")
-                        .HasForeignKey("DanhMucId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Backend.Models.SanPham", "SanPham")
-                        .WithMany("DanhMuc_SanPham")
-                        .HasForeignKey("SanPhamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DanhMuc");
-
-                    b.Navigation("SanPham");
+                    b.HasOne("Backend.Models.Product", null)
+                        .WithMany("FlashSale")
+                        .HasForeignKey("ProductId");
                 });
 
-            modelBuilder.Entity("Backend.Models.HinhAnhSanPham", b =>
+            modelBuilder.Entity("Backend.Models.Gallery", b =>
                 {
-                    b.HasOne("Backend.Models.BienTheSanPham", "BienTheSanPham")
-                        .WithMany("HinhAnhSanPham")
-                        .HasForeignKey("BienTheId")
+                    b.HasOne("Backend.Models.AttributeValues", "AttributeValues")
+                        .WithMany()
+                        .HasForeignKey("AttributeValue_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("BienTheSanPham");
+                    b.HasOne("Backend.Models.Product", "Product")
+                        .WithMany("Galleries")
+                        .HasForeignKey("Product_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AttributeValues");
+
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Backend.Models.ThuongHieu_SanPham", b =>
+            modelBuilder.Entity("Backend.Models.Product", b =>
                 {
-                    b.HasOne("Backend.Models.SanPham", "SanPham")
-                        .WithMany("ThuongHieu_SanPham")
-                        .HasForeignKey("SanPhamId")
+                    b.HasOne("Backend.Models.Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandId");
+
+                    b.Navigation("Brand");
+                });
+
+            modelBuilder.Entity("Backend.Models.ProductAttribute", b =>
+                {
+                    b.HasOne("Backend.Models.Attribute", "Attribute")
+                        .WithMany("ProductAttributes")
+                        .HasForeignKey("Attribute_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Backend.Models.ThuongHieu", "ThuongHieu")
-                        .WithMany("ThuongHieu_SanPham")
-                        .HasForeignKey("ThuongHieuId")
+                    b.HasOne("Backend.Models.Product", "Product")
+                        .WithMany("ProductAttributes")
+                        .HasForeignKey("Product_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SanPham");
+                    b.Navigation("Attribute");
 
-                    b.Navigation("ThuongHieu");
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Backend.Models.ProductCategory", b =>
+                {
+                    b.HasOne("Backend.Models.Category", "Category")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("Category_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.Product", "Product")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("Product_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Backend.Models.ProductShipping", b =>
+                {
+                    b.HasOne("Backend.Models.Product", "Product")
+                        .WithMany("ProductShippings")
+                        .HasForeignKey("Product_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.Shipping", "Shipping")
+                        .WithMany("ProductShippings")
+                        .HasForeignKey("Shipping_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Shipping");
+                });
+
+            modelBuilder.Entity("Backend.Models.ProductTag", b =>
+                {
+                    b.HasOne("Backend.Models.Product", "Product")
+                        .WithMany("ProductTags")
+                        .HasForeignKey("Product_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.Tag", "Tag")
+                        .WithMany("ProductTags")
+                        .HasForeignKey("Tag_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("Backend.Models.Variant", b =>
+                {
+                    b.HasOne("Backend.Models.Product", "Product")
+                        .WithMany("Variants")
+                        .HasForeignKey("Product_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Models.VariantAttributeValue", "VariantAttributeValue")
+                        .WithMany("Variants")
+                        .HasForeignKey("VariantAttributeValue_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("VariantAttributeValue");
+                });
+
+            modelBuilder.Entity("Backend.Models.VariantAttributeValue", b =>
+                {
+                    b.HasOne("Backend.Models.AttributeValues", "AttributeValues")
+                        .WithMany("VariantAttributeValues")
+                        .HasForeignKey("AttributeValue_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AttributeValues");
+                });
+
+            modelBuilder.Entity("Backend.Models.VariantValue", b =>
+                {
+                    b.HasOne("Backend.Models.Variant", "Variant")
+                        .WithOne("VariantValue")
+                        .HasForeignKey("Backend.Models.VariantValue", "Variant_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Variant");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -591,28 +900,63 @@ namespace Backend.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Backend.Models.BienTheSanPham", b =>
+            modelBuilder.Entity("Backend.Models.Attribute", b =>
                 {
-                    b.Navigation("HinhAnhSanPham");
+                    b.Navigation("AttributeValues");
+
+                    b.Navigation("ProductAttributes");
                 });
 
-            modelBuilder.Entity("Backend.Models.DanhMuc", b =>
+            modelBuilder.Entity("Backend.Models.AttributeValues", b =>
                 {
-                    b.Navigation("DanhMuc_SanPham");
+                    b.Navigation("VariantAttributeValues");
                 });
 
-            modelBuilder.Entity("Backend.Models.SanPham", b =>
+            modelBuilder.Entity("Backend.Models.Brand", b =>
                 {
-                    b.Navigation("BienTheSanPham");
-
-                    b.Navigation("DanhMuc_SanPham");
-
-                    b.Navigation("ThuongHieu_SanPham");
+                    b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Backend.Models.ThuongHieu", b =>
+            modelBuilder.Entity("Backend.Models.Category", b =>
                 {
-                    b.Navigation("ThuongHieu_SanPham");
+                    b.Navigation("ProductCategories");
+                });
+
+            modelBuilder.Entity("Backend.Models.Product", b =>
+                {
+                    b.Navigation("FlashSale");
+
+                    b.Navigation("Galleries");
+
+                    b.Navigation("ProductAttributes");
+
+                    b.Navigation("ProductCategories");
+
+                    b.Navigation("ProductShippings");
+
+                    b.Navigation("ProductTags");
+
+                    b.Navigation("Variants");
+                });
+
+            modelBuilder.Entity("Backend.Models.Shipping", b =>
+                {
+                    b.Navigation("ProductShippings");
+                });
+
+            modelBuilder.Entity("Backend.Models.Tag", b =>
+                {
+                    b.Navigation("ProductTags");
+                });
+
+            modelBuilder.Entity("Backend.Models.Variant", b =>
+                {
+                    b.Navigation("VariantValue");
+                });
+
+            modelBuilder.Entity("Backend.Models.VariantAttributeValue", b =>
+                {
+                    b.Navigation("Variants");
                 });
 #pragma warning restore 612, 618
         }

@@ -19,39 +19,6 @@ import DichVu from '../../Component/DichVu/DichVu'
 import Blog from '../../Component/DichVu/Blog'
 import Footer from '../../Component/Footer'
 
-// const StyledBanner = styled(Box)(({ theme }) => ({
-//   width: '100%',
-//   height: 400,
-//   backgroundColor: theme.palette.grey[100],
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-//   borderRadius: theme.shape.borderRadius,
-//   marginBottom: theme.spacing(4),
-// }))
-
-// const CategoryCard = styled(Paper)(({ theme }) => ({
-//   padding: theme.spacing(3),
-//   textAlign: 'center',
-//   borderRadius: theme.shape.borderRadius,
-//   transition: 'transform 0.2s',
-//   '&:hover': {
-//     transform: 'translateY(-4px)',
-//     boxShadow: theme.shadows[4],
-//   },
-// }))
-
-// const ProductCard = styled(Card)(({ theme }) => ({
-//   height: '100%',
-//   display: 'flex',
-//   flexDirection: 'column',
-//   transition: 'transform 0.2s',
-//   '&:hover': {
-//     transform: 'translateY(-4px)',
-//     boxShadow: theme.shadows[4],
-//   },
-// }))
-
 const HomePages = () => {
   return (
     <div>
